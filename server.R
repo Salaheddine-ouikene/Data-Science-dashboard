@@ -291,10 +291,13 @@ shinyServer(
     logisticModel <- reactive({
       req(input$logistic_response_var) # Ensure response variable is selected
       req(input$logistic_vars) # Ensure predictor variables are selected
-     
+      set.seed(123)  # For reproducible results
+      data_partition <- createDataPartition(values$df_data[[input$logistic_response_var]], p =input$logistic_split_ratio, list = FALSE)
+      train_data <- values$df_data[data_partition, ]
+      test_data <- values$df_data[-data_partition, ]
      
      x<-paste(input$logistic_response_var, "~", paste(input$logistic_vars, collapse = " + "))
-     model <- glm(x, data = values$df_data, family = "binomial")
+     model <- glm(x, data = train_data, family = "binomial")
      model
     })
     # Render logistic model summary
@@ -428,7 +431,11 @@ shinyServer(
       req(input$tree_response_var) # Assurez-vous que la variable de réponse est sélectionnée
       req(input$tree_vars) # Assurez-vous que les variables prédictives sont sélectionnées
       formula <- as.formula(paste(input$tree_response_var, "~", paste(input$tree_vars, collapse = " + ")))
-      model<-rpart(formula, data = values$df_data,method="class")
+      set.seed(123)
+      data_partition <- createDataPartition(values$df_data[[input$tree_response_var]], p = input$tree_split_ratio, list = FALSE)
+      train_data <- values$df_data[data_partition, ]
+      test_data <- values$df_data[-data_partition, ]
+      model<-rpart(formula, data = train_data,method="class")
       model
     })
     
@@ -500,11 +507,17 @@ shinyServer(
       req(input$rf_response_var)  # Ensure response variable is selected
       req(input$rf_vars)  # Ensure predictor variables are selected
       
-      data_modified <- values$df_data
-      data_modified[[input$rf_response_var]] <- as.factor(data_modified[[input$rf_response_var]])
+      
+      
       
       formula <- as.formula(paste(input$rf_response_var, "~", paste(input$rf_vars, collapse = " + ")))
-      randomForest(formula, data = data_modified, ntree = input$rf_ntree)
+      data_modified <- values$df_data
+      data_modified[[input$rf_response_var]] <- as.factor(data_modified[[input$rf_response_var]])
+      set.seed(123)
+      data_partition <- createDataPartition(data_modified[[input$rf_response_var]], p = input$rf_split_ratio, list = FALSE)
+      train_data <- data_modified[data_partition, ]
+      test_data <- data_modified[-data_partition, ]
+      randomForest(formula, data = train_data, ntree = input$rf_ntree)
     })
     
     
