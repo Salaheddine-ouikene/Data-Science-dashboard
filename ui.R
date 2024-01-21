@@ -10,6 +10,7 @@ if (!require("ROSE")) install.packages("ROSE")
 library(caret)
 library(ROSE)
 
+
 shinyUI(
   dashboardPage(
     dashboardHeader(title = "Projet Prog Web"),
@@ -26,10 +27,11 @@ shinyUI(
         ),
         menuItem("Analyse expolaratoire", icon = icon("magnifying-glass"), tabName = "analyse"),
         menuItem("entraînement de modèles", icon = icon("brain"), tabName = "model", startExpanded = TRUE,
-                 menuSubItem("Logistic Regression", tabName = "logistic_regression", icon = icon("chart-line")),
+                 
                  menuSubItem("Decision Trees", tabName = "decision_trees", icon = icon("tree")),
                  menuSubItem("Random Forests", tabName = "random_forests", icon = icon("leaf")),
-                 menuSubItem("SVM", tabName = "svm", icon = icon("project-diagram"))
+                 menuSubItem("Logistic Regression", tabName = "logistic_regression", icon = icon("chart-line"))
+                 
         )
       )
     ),
@@ -134,7 +136,9 @@ shinyUI(
                              selectInput("logistic_response_var", "Select Response Variable", choices = NULL),
                              selectInput("logistic_vars", "Select Predictor Variables", choices = NULL, multiple = TRUE),
                              sliderInput("threshold", "Threshold for Classification:", min = 0, max = 1, value = 0.5, step = 0.001),
-                             numericInput("logistic_split_ratio", "Training Data Ratio", value = 0.7, min = 0.1, max = 0.9, step = 0.1)  # Split Ratio Input
+                             numericInput("logistic_split_ratio", "Training Data Ratio", value = 0.7, min = 0.1, max = 0.9, step = 0.1),  # Split Ratio Input
+                             actionButton("Target_dummief", "Dummification"),
+                             actionButton("train", "Train")
                            )
                          ),
                          fluidRow(
@@ -155,8 +159,13 @@ shinyUI(
                   column(6, titlePanel("Predicted probabilities plot"), plotOutput("predicted_probabilities_plot"))
                 ),
                 fluidRow(titlePanel("Feature Importance"),
-                         column(4, tableOutput("logistic_coef")),
-                         column(8, plotOutput("logistic_coef_plot"))
+                         mainPanel(
+                           tabsetPanel(
+                             tabPanel("Tableau",tableOutput("logistic_coef")),
+                             tabPanel(  "plot",plotOutput("logistic_coef_plot"))
+                                      )
+                                   )
+                         
                 )
         ),
         tabItem(tabName = "decision_trees",
@@ -167,7 +176,8 @@ shinyUI(
                            wellPanel(
                              selectInput("tree_response_var", "Sélectionner la variable de réponse", choices = NULL),
                              selectInput("tree_vars", "Sélectionner les variables prédictives", choices = NULL, multiple = TRUE),
-                             numericInput("tree_split_ratio", "Training Data Ratio", value = 0.7, min = 0.1, max = 0.9, step = 0.1)  # Split Ratio Input
+                             numericInput("tree_split_ratio", "Training Data Ratio", value = 0.7, min = 0.1, max = 0.9, step = 0.1),  # Split Ratio Input
+                             actionButton("train_decision_trees", "Train")
                            )
                          ),
                          fluidRow(
@@ -196,7 +206,8 @@ shinyUI(
                              selectInput("rf_response_var", "Select Response Variable", choices = NULL),
                              selectInput("rf_vars", "Select Predictor Variables", choices = NULL, multiple = TRUE),
                              numericInput("rf_ntree", "Number of Trees", value = 500, min = 1),
-                             numericInput("rf_split_ratio", "Training Data Ratio", value = 0.7, min = 0.1, max = 0.9, step = 0.1)  # Split Ratio Input
+                             numericInput("rf_split_ratio", "Training Data Ratio", value = 0.7, min = 0.1, max = 0.9, step = 0.1),  # Split Ratio 
+                             actionButton("train_random_forests", "Train")
                            )
                          ),
                          fluidRow(
