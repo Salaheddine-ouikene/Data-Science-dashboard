@@ -140,7 +140,15 @@ shinyUI(
                              actionButton("Target_dummief", "Dummification"),
                              actionButton("train", "Train")
                            )
-                         ),
+                         )
+                        
+                  ),
+                  
+                  column(8,
+                         fluidRow(titlePanel("Model Summary"),
+                                  div(verbatimTextOutput("summarymodel"), style = "overflow-y: scroll; max-height: 250px;")
+                         )
+                         ,
                          fluidRow(
                            column(12,
                                   titlePanel("Performance metrics"),
@@ -148,23 +156,18 @@ shinyUI(
                                   tableOutput("logistic_performance_metrics")
                            )
                          )
-                  ),
-                  column(8,
-                         titlePanel("Summary"),
-                         div(verbatimTextOutput("summarymodel"), style = "overflow-y: scroll; max-height: 350px;")
                   )
+                  
                 ),
                 fluidRow(
                   column(6, titlePanel("ROC Curve"), plotOutput("logistic_roc_curve")),
                   column(6, titlePanel("Predicted probabilities plot"), plotOutput("predicted_probabilities_plot"))
                 ),
                 fluidRow(titlePanel("Feature Importance"),
-                         mainPanel(
-                           tabsetPanel(
-                             tabPanel("Tableau",tableOutput("logistic_coef")),
-                             tabPanel(  "plot",plotOutput("logistic_coef_plot"))
-                                      )
-                                   )
+                         
+                         column(4,  tableOutput("logistic_coef")),
+                         column(8,plotOutput("logistic_coef_plot"))
+                                   
                          
                 )
         ),
@@ -188,8 +191,10 @@ shinyUI(
                          )
                   ),
                   column(8,
-                         titlePanel("Résumé du Modèle"),
-                         div(verbatimTextOutput("tree_summary"), style = "overflow-y: scroll; max-height: 400px;")
+                         fluidRow(titlePanel("Résumé du Modèle"),
+                                  div(verbatimTextOutput("tree_summary"), style = "overflow-y: scroll; max-height: 400px;")
+                                  )
+                         
                   )
                 ),
                 fluidRow(
@@ -209,17 +214,20 @@ shinyUI(
                              numericInput("rf_split_ratio", "Training Data Ratio", value = 0.7, min = 0.1, max = 0.9, step = 0.1),  # Split Ratio 
                              actionButton("train_random_forests", "Train")
                            )
-                         ),
+                         )
+                         
+                  ),
+                  column(8,
+                         fluidRow(titlePanel("Model Summary"),
+                         verbatimTextOutput("rf_summary")
+                         )
+                         ,
                          fluidRow(
                            column(12,
                                   titlePanel("Performance Metrics"),
                                   tableOutput("rf_performance_metrics")
                            )
                          )
-                  ),
-                  column(8,
-                         titlePanel("Model Summary"),
-                         verbatimTextOutput("rf_summary")
                   )
                 ),
                 fluidRow(
