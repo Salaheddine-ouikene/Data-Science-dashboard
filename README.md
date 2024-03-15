@@ -10,11 +10,11 @@ Ce projet consiste en la création d'une interface en R Shiny pour l'exploration
 
 ## Fonctionnalités de l'interface
 
-Notre interface en R Shiny propose les fonctionnalités suivantes, conformément aux exigences du projet :
+Cette interface en R Shiny propose les fonctionnalités suivantes :
 
 ### Chargement de données
 
-- Notre interface permet de charger tout type de données en format CSV.
+- l'interface permet de charger tout type de données en format CSV.
 - Elle détecte automatiquement le type de chaque variable (qualitative, quantitative).
 - Elle gère les catégories en cas de variables qualitatives.
 - Elle prend en compte la présence d'outliers et de valeurs manquantes.
@@ -28,7 +28,7 @@ Notre interface en R Shiny propose les fonctionnalités suivantes, conformément
 
 ### Entraînement de modèles
 
-- Nous avons choisi trois modèles de classification supervisée pour l'entraînement, regression logistique, arbre de decision et foret aleatoire.
+- l'interface contient trois modèles de classification supervisée pour l'entraînement, regression logistique, arbre de decision et foret aleatoire.
 - L'interface permet une évaluation comparative des modèles.
 - Les résultats sont affichés, y compris la précision Precision, Recall, Fscore, la courbe ROC, et l'aire sous la courbe (AUC).
 - Les features les plus importants sont identifiés et affichés.
@@ -45,6 +45,6 @@ Notre interface en R Shiny propose les fonctionnalités suivantes, conformément
 
 ## Jeu de données
 
-Nous avons choisi d'effectuer notre étude de cas sur le jeu de données "heart", qui est largement utilisé pour la classification binaire.
+j'ai choisi d'effectuer une étude de cas sur le jeu de données "heart", qui est largement utilisé pour la classification binaire.
 
 Pour plus d'informations sur ce jeu de données, vous pouvez consulter [ici](https://archive.ics.uci.edu/ml/datasets/heart+Disease).
