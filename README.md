@@ -45,6 +45,6 @@ Cette interface en R Shiny propose les fonctionnalités suivantes :
 
 ## Jeu de données
 
-j'ai choisi d'effectuer une étude de cas sur le jeu de données "heart", qui est largement utilisé pour la classification binaire.
+J'ai choisi d'effectuer une étude de cas sur le jeu de données "heart", qui est largement utilisé pour la classification binaire.
 
 Pour plus d'informations sur ce jeu de données, vous pouvez consulter [ici](https://archive.ics.uci.edu/ml/datasets/heart+Disease).
